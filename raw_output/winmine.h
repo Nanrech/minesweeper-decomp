@@ -59,6 +59,21 @@
 #define SM_CXVIRTUALSCREEN 0x4e
 #define SM_CYVIRTUALSCREEN 0x4f
 
+#define TILE_HAS_MINE 0x80
+#define TILE_IS_REVEALED 0x40
+#define TILE_STATE_MASK 0x1f
+#define TILE_NON_STATE_MASK 0xe0
+
+#define TILE_STATE_BLANK 0x00
+#define TILE_STATE_PRESSED_QUESTION 0x09
+#define TILE_STATE_MINE 0x0a
+#define TILE_STATE_WRONG_FLAG 0x0b
+#define TILE_STATE_EXPLODED_MINE 0x0c
+#define TILE_STATE_QUESTION 0x0d
+#define TILE_STATE_FLAGGED 0x0e
+#define TILE_STATE_COVERED 0x0f
+#define TILE_STATE_BORDER 0x10
+
 typedef unsigned char undefined;
 
 typedef unsigned char bool;

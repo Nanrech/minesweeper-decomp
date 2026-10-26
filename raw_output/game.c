@@ -1,7 +1,7 @@
 #include "winmine.h"
 
-void updateAndRedrawTile(int x, int y, byte param_3) {
-  g_mine_board[y][x] = g_mine_board[y][x] & 0xe0 | param_3;
+void updateAndRedrawTile(int x, int y, byte new_flag) {
+  g_mine_board[y][x] = g_mine_board[y][x] & TILE_NON_STATE_MASK | new_flag;
   drawTile(x, y);
   return;
 }
@@ -23,7 +23,7 @@ void clearBoard(void) {
   iVar4 = 0x360;
   do {
     iVar2 = iVar4 + -1;
-    *(undefined1 *)(iVar4 + 0x100533f) = 0xf;
+    *(undefined1 *)(iVar4 + 0x100533f) = TILE_STATE_COVERED;
     iVar7 = g_state_board_height;
     iVar1 = g_state_board_width;
     iVar4 = iVar2;
@@ -33,8 +33,8 @@ void clearBoard(void) {
     iVar4 = g_state_board_width + 2;
     do {
       iVar3 = iVar4 + -1;
-      *(undefined1 *)(iVar4 + 0x100533f) = 0x10;
-      *(undefined1 *)(iVar2 + 0x1005360 + iVar3) = 0x10;
+      *(undefined1 *)(iVar4 + 0x100533f) = TILE_STATE_BORDER;
+      *(undefined1 *)(iVar2 + 0x1005360 + iVar3) = TILE_STATE_BORDER;
       iVar4 = iVar3;
     } while (iVar3 != 0);
   }
@@ -46,8 +46,8 @@ void clearBoard(void) {
       pabVar6 = pabVar6 + -1;
       puVar5 = puVar5 + -0x20;
       iVar7 = iVar7 + -1;
-      (*pabVar6)[0] = 0x10;
-      *puVar5 = 0x10;
+      (*pabVar6)[0] = TILE_STATE_BORDER;
+      *puVar5 = TILE_STATE_BORDER;
     } while (iVar7 != 0);
   }
   return;
@@ -67,7 +67,7 @@ int countMines3x3(int x, int y) {
     iVar3 = x + -1;
     do {
       for (; iVar3 <= x + 1; iVar3 = iVar3 + 1) {
-        if (((*pabVar2)[iVar3] & 0x80) != 0) {
+        if (((*pabVar2)[iVar3] & TILE_HAS_MINE) != 0) {
           counter = counter + 1;
         }
       }
@@ -83,8 +83,8 @@ void updateAndRedrawBoardGameOver(byte game_result) {
   // Nan:
   // There's some weird stuff going on with game_result
   // not sure if it's a compiler artifact or coded like this
-  // win  = 0x0e
-  // loss = 0x0a
+  // win  = TILE_STATE_FLAGGED
+  // loss = TILE_STATE_MINE
   int iVar1;
   byte bVar2;
   int iVar3;
@@ -103,15 +103,15 @@ void updateAndRedrawBoardGameOver(byte game_result) {
       if (0 < iVar1) {
         do {
           bVar2 = *(byte *)(iVar5 + iVar3);
-          if ((bVar2 & 0x40) == 0) {
+          if ((bVar2 & TILE_IS_REVEALED) == 0) {
             if ((char)bVar2 < '\0') {
-              if ((bVar2 & 0x1f) != 0xe) {
-                bVar2 = bVar2 & 0xe0 | game_result;
+              if ((bVar2 & TILE_STATE_MASK) != TILE_STATE_FLAGGED) {
+                bVar2 = bVar2 & TILE_NON_STATE_MASK | game_result;
               LAB_01002fc7:
                 *(byte *)(iVar5 + iVar3) = bVar2;
               }
-            } else if ((bVar2 & 0x1f) == 0xe) {
-              bVar2 = bVar2 & 0xeb | 0xb;
+            } else if ((bVar2 & TILE_STATE_MASK) == TILE_STATE_FLAGGED) {
+              bVar2 = bVar2 & 0xeb | TILE_STATE_WRONG_FLAG;
               goto LAB_01002fc7;
             }
           }
@@ -139,11 +139,12 @@ void revealTileAndQueueForFloodFill(int x, int y) {
   byte bVar1;
   int iVar2;
 
-  if ((((g_mine_board[y][x] & 0x40) == 0) && (bVar1 = g_mine_board[y][x] & 0x1f, bVar1 != 0x10)) &&
-      (bVar1 != 0xe)) {
+  if ((((g_mine_board[y][x] & TILE_IS_REVEALED) == 0) &&
+       (bVar1 = g_mine_board[y][x] & TILE_STATE_MASK, bVar1 != TILE_STATE_BORDER)) &&
+      (bVar1 != TILE_STATE_FLAGGED)) {
     g_state_revealed_tiles = g_state_revealed_tiles + 1;
     iVar2 = countMines3x3(x, y);
-    g_mine_board[y][x] = (byte)iVar2 | 0x40;
+    g_mine_board[y][x] = (byte)iVar2 | TILE_IS_REVEALED;
     drawTile(x, y);
     if (iVar2 == 0) {
       g_reveal_queue_x[g_reveal_queue_write_index] = x;
@@ -205,7 +206,7 @@ int countFlags3x3(int x, int y) {
     iVar3 = x + -1;
     do {
       for (; iVar3 <= x + 1; iVar3 = iVar3 + 1) {
-        if (((*pabVar2)[iVar3] & 0x1f) == 0xe) {
+        if (((*pabVar2)[iVar3] & TILE_STATE_MASK) == TILE_STATE_FLAGGED) {
           local_8 = local_8 + 1;
         }
       }
@@ -222,13 +223,13 @@ void setTilePressed(int x, int y) {
   byte bVar2;
 
   bVar1 = g_mine_board[y][x];
-  bVar2 = bVar1 & 0x1f;
-  if (bVar2 == 0xd) {
-    bVar2 = 9;
-  } else if (bVar2 == 0xf) {
-    bVar2 = 0;
+  bVar2 = bVar1 & TILE_STATE_MASK;
+  if (bVar2 == TILE_STATE_QUESTION) {
+    bVar2 = TILE_STATE_PRESSED_QUESTION;
+  } else if (bVar2 == TILE_STATE_COVERED) {
+    bVar2 = TILE_STATE_BLANK;
   }
-  g_mine_board[y][x] = bVar1 & 0xe0 | bVar2;
+  g_mine_board[y][x] = bVar1 & TILE_NON_STATE_MASK | bVar2;
   return;
 }
 
@@ -237,13 +238,13 @@ void setTileNotPressed(int x, int y) {
   byte bVar2;
 
   bVar1 = g_mine_board[y][x];
-  bVar2 = bVar1 & 0x1f;
-  if (bVar2 == 9) {
-    bVar2 = 0xd;
-  } else if ((bVar1 & 0x1f) == 0) {
-    bVar2 = 0xf;
+  bVar2 = bVar1 & TILE_STATE_MASK;
+  if (bVar2 == TILE_STATE_PRESSED_QUESTION) {
+    bVar2 = TILE_STATE_QUESTION;
+  } else if ((bVar1 & TILE_STATE_MASK) == TILE_STATE_BLANK) {
+    bVar2 = TILE_STATE_COVERED;
   }
-  g_mine_board[y][x] = bVar1 & 0xe0 | bVar2;
+  g_mine_board[y][x] = bVar1 & TILE_NON_STATE_MASK | bVar2;
   return;
 }
 
@@ -270,7 +271,8 @@ void FUN_010031d4(int x, int y) {
     g_mouse_tile_y = y;
     if (DAT_01005144 == 0) {
       if ((((0 < iVar6) && (0 < local_8)) && (iVar6 <= g_state_board_width)) &&
-          ((local_8 <= g_state_board_height && ((g_mine_board[local_8][iVar6] & 0x40) == 0)))) {
+          ((local_8 <= g_state_board_height &&
+            ((g_mine_board[local_8][iVar6] & TILE_IS_REVEALED) == 0)))) {
         setTileNotPressed(iVar6, local_8);
         drawTile(iVar6, local_8);
       }
@@ -278,8 +280,9 @@ void FUN_010031d4(int x, int y) {
       iVar6 = g_mouse_tile_x;
       if (((0 < x) && (0 < y)) &&
           ((x <= g_state_board_width &&
-            (((y <= g_state_board_height && ((g_mine_board[y][x] & 0x40) == 0)) &&
-              ((g_mine_board[y][x] & 0x1f) != 0xe)))))) {
+            (((y <= g_state_board_height &&
+               ((g_mine_board[y][x] & TILE_IS_REVEALED) == 0)) &&
+              ((g_mine_board[y][x] & TILE_STATE_MASK) != TILE_STATE_FLAGGED)))))) {
         setTilePressed(g_mouse_tile_x, g_mouse_tile_y);
         drawTile(iVar6, iVar4);
       }
@@ -335,7 +338,7 @@ void FUN_010031d4(int x, int y) {
         iVar4 = local_10;
         do {
           for (; iVar6 <= y; iVar6 = iVar6 + 1) {
-            if (((*pabVar5)[iVar6] & 0x40) == 0) {
+            if (((*pabVar5)[iVar6] & TILE_IS_REVEALED) == 0) {
               setTileNotPressed(iVar6, iVar4);
             }
           }
@@ -350,7 +353,7 @@ void FUN_010031d4(int x, int y) {
         iVar4 = local_20;
         do {
           for (; iVar6 <= x; iVar6 = iVar6 + 1) {
-            if (((*pabVar5)[iVar6] & 0x40) == 0) {
+            if (((*pabVar5)[iVar6] & TILE_IS_REVEALED) == 0) {
               setTilePressed(iVar6, iVar4);
             }
           }
@@ -411,7 +414,7 @@ void handleGameOver(int game_result) {
   // 1 --> 2 (win)
   g_state_face = (game_result != 0) + 2;
   drawFace(g_state_face);
-  updateAndRedrawBoardGameOver((game_result != 0) * '\x04' + 10);
+  updateAndRedrawBoardGameOver((game_result != 0) * 0x04 + TILE_STATE_MINE);
   if ((game_result != 0) && (g_mines_left != 0)) {
     updateAndRedrawMineCounter(-g_mines_left);
   }
@@ -432,7 +435,7 @@ void handleLeftClickTile(int x, int y) {
   int iVar2;
   int iVar3;
 
-  if ((g_mine_board[y][x] & 0x80) == 0) {
+  if ((g_mine_board[y][x] & TILE_HAS_MINE) == 0) {
     floodRevealFromTile(x, y);
     if (g_state_revealed_tiles != g_state_safe_tiles) {
       return;
@@ -449,9 +452,9 @@ void handleLeftClickTile(int x, int y) {
         iVar2 = 1;
         if (1 < g_state_board_width) {
           do {
-            if ((*(byte *)(iVar3 + iVar2) & 0x80) == 0) {
-              g_mine_board[y][x] = 0xf;
-              g_mine_board[iVar1][iVar2] = g_mine_board[iVar1][iVar2] | 0x80;
+            if ((*(byte *)(iVar3 + iVar2) & TILE_HAS_MINE) == 0) {
+              g_mine_board[y][x] = TILE_STATE_COVERED;
+              g_mine_board[iVar1][iVar2] = g_mine_board[iVar1][iVar2] | TILE_HAS_MINE;
               floodRevealFromTile(x, y);
               return;
             }
@@ -463,7 +466,7 @@ void handleLeftClickTile(int x, int y) {
       } while (iVar1 < g_state_board_height);
       return;
     }
-    updateAndRedrawTile(x, y, 0x4c);
+    updateAndRedrawTile(x, y, TILE_IS_REVEALED | TILE_STATE_EXPLODED_MINE);
     iVar1 = 0;
   }
   handleGameOver(iVar1);
@@ -480,7 +483,8 @@ void FUN_010035b7(int x, int y) {
 
   bVar2 = FALSE;
   bVar1 = g_mine_board[y][x];
-  if (((bVar1 & 0x40) == 0) || (uVar3 = countFlags3x3(x, y), (bVar1 & 0x1f) != uVar3)) {
+  if (((bVar1 & TILE_IS_REVEALED) == 0) ||
+      (uVar3 = countFlags3x3(x, y), (bVar1 & TILE_STATE_MASK) != uVar3)) {
     FUN_010031d4(-2, -2);
     return;
   }
@@ -490,11 +494,12 @@ void FUN_010035b7(int x, int y) {
     x_00 = x + -1;
     do {
       for (; x_00 <= x + 1; x_00 = x_00 + 1) {
-        if ((((*pabVar5)[x_00] & 0x1f) == 0xe) || (-1 < (char)(*pabVar5)[x_00])) {
+        if ((((*pabVar5)[x_00] & TILE_STATE_MASK) == TILE_STATE_FLAGGED) ||
+            (-1 < (char)(*pabVar5)[x_00])) {
           floodRevealFromTile(x_00, iVar4);
         } else {
           bVar2 = TRUE;
-          updateAndRedrawTile(x_00, iVar4, 0x4c);
+          updateAndRedrawTile(x_00, iVar4, TILE_IS_REVEALED | TILE_STATE_EXPLODED_MINE);
         }
       }
       iVar4 = iVar4 + 1;
@@ -537,8 +542,9 @@ void prepareNewGame(void) {
     do {
       x_rand = rng(g_state_board_width);
       y_rand = rng(g_state_board_height);
-    } while ((g_mine_board[y_rand + 1][x_rand + 1] & 0x80) != 0);
-    g_mine_board[y_rand + 1][x_rand + 1] = g_mine_board[y_rand + 1][x_rand + 1] | 0x80;
+    } while ((g_mine_board[y_rand + 1][x_rand + 1] & TILE_HAS_MINE) != 0);
+    g_mine_board[y_rand + 1][x_rand + 1] =
+        g_mine_board[y_rand + 1][x_rand + 1] | TILE_HAS_MINE;
     g_mine_counter = g_mine_counter + -1;
   } while (g_mine_counter != 0);
   g_state_safe_tiles = g_state_board_height * g_state_board_width - g_state_mine_counter;
@@ -569,25 +575,26 @@ void handleRightClickTile(int x, int y) {
     return;
   }
   bVar1 = g_mine_board[y][x];
-  if ((bVar1 & 0x40) != 0) {
+  if ((bVar1 & TILE_IS_REVEALED) != 0) {
     return;
   }
-  bVar1 = bVar1 & 0x1f;
-  if (bVar1 == 0xe) {
+  bVar1 = bVar1 & TILE_STATE_MASK;
+  if (bVar1 == TILE_STATE_FLAGGED) {
     iVar2 = 1;
-    bVar1 = (g_state_marks == 0) * '\x02' + 0xd;
+    bVar1 = (g_state_marks == 0) * 0x02 + TILE_STATE_QUESTION;
   } else {
-    if (bVar1 == 0xd) {
-      bVar1 = 0xf;
+    if (bVar1 == TILE_STATE_QUESTION) {
+      bVar1 = TILE_STATE_COVERED;
       goto LAB_010037b4;
     }
-    bVar1 = 0xe;
+    bVar1 = TILE_STATE_FLAGGED;
     iVar2 = -1;
   }
   updateAndRedrawMineCounter(iVar2);
 LAB_010037b4:
   updateAndRedrawTile(x, y, bVar1);
-  if (((g_mine_board[y][x] & 0x1f) == 0xe) && (g_state_revealed_tiles == g_state_safe_tiles)) {
+  if (((g_mine_board[y][x] & TILE_STATE_MASK) == TILE_STATE_FLAGGED) &&
+      (g_state_revealed_tiles == g_state_safe_tiles)) {
     handleGameOver(1);
   }
   return;
@@ -613,8 +620,8 @@ void FUN_010037e1(void) {
       g_mouse_tile_x = -2;
     }
     if (DAT_01005144 == 0) {
-      if (((g_mine_board[g_mouse_tile_y][g_mouse_tile_x] & 0x40) == 0) &&
-          ((g_mine_board[g_mouse_tile_y][g_mouse_tile_x] & 0x1f) != 0xe)) {
+      if (((g_mine_board[g_mouse_tile_y][g_mouse_tile_x] & TILE_IS_REVEALED) == 0) &&
+          ((g_mine_board[g_mouse_tile_y][g_mouse_tile_x] & TILE_STATE_MASK) != TILE_STATE_FLAGGED)) {
         handleLeftClickTile(g_mouse_tile_x, g_mouse_tile_y);
       }
     } else {

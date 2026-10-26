@@ -131,7 +131,7 @@ void drawTile(int x, int y) {
 
   hdc = GetDC(hWnd_main);
   BitBlt(hdc, x * 0x10 + -4, y * 0x10 + 0x27, 0x10, 0x10,
-         (HDC)(&DAT_01005a20)[(int)(char)g_mine_board[y][x] & 0x1f], 0, 0, 0xcc0020);
+         (HDC)(&DAT_01005a20)[(int)(char)g_mine_board[y][x] & TILE_STATE_MASK], 0, 0, 0xcc0020);
   ReleaseDC(hWnd_main, hdc);
   return;
 }
@@ -153,7 +153,7 @@ void drawTilesHDC(HDC hdc) {
       if (0 < g_state_board_width) {
         do {
           BitBlt(hdc, local_8, local_c, 0x10, 0x10,
-                 (HDC)(&DAT_01005a20)[*(byte *)(iVar1 + iVar2) & 0x1f], 0, 0, SRCCOPY);
+                 (HDC)(&DAT_01005a20)[*(byte *)(iVar1 + iVar2) & TILE_STATE_MASK], 0, 0, SRCCOPY);
           local_8 = local_8 + 0x10;
           iVar2 = iVar2 + 1;
         } while (iVar2 <= g_state_board_width);

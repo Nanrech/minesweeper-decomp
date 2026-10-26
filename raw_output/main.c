@@ -294,8 +294,8 @@ LAB_01002085:
       (g_mouse_tile_y <= g_state_board_height)) {
     pHVar2 = GetDC((HWND)0x0);
     SetPixel(pHVar2, 0, 0,
-             (-(uint)((g_mine_board[g_mouse_tile_y][g_mouse_tile_x] & 0x80) != 0) & 0xff000001) +
-                 0xffffff);
+             (-(uint)((g_mine_board[g_mouse_tile_y][g_mouse_tile_x] & TILE_HAS_MINE) != 0) &
+              0xff000001) + 0xffffff);
     ReleaseDC((HWND)0x0, pHVar2);
   }
 switchD_01001f75_caseD_203:
