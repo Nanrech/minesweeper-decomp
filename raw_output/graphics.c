@@ -78,7 +78,7 @@ BOOL FUN_01002414_scary(void) {
       piVar6 = piVar6 + 1;
       iVar7 = iVar7 + iVar2;
     } while ((int)piVar6 < 0x1005974);
-    hdc = GetDC(hWnd_main);
+    hdc = GetDC(hWnd);
     iVar7 = 0;
     do {
       pHVar3 = CreateCompatibleDC(hdc);
@@ -99,7 +99,7 @@ BOOL FUN_01002414_scary(void) {
           DAT_01005a04, 0);
       iVar7 = iVar7 + 4;
     } while (iVar7 < 0x40);
-    ReleaseDC(hWnd_main, hdc);
+    ReleaseDC(hWnd, hdc);
     uVar5 = 1;
   }
   return uVar5;
@@ -129,10 +129,10 @@ void cleanupGameResources(void) {
 void drawTile(int x, int y) {
   HDC hdc;
 
-  hdc = GetDC(hWnd_main);
+  hdc = GetDC(hWnd);
   BitBlt(hdc, x * 0x10 + -4, y * 0x10 + 0x27, 0x10, 0x10,
          (HDC)(&DAT_01005a20)[(int)(char)g_mine_board[y][x] & TILE_STATE_MASK], 0, 0, 0xcc0020);
-  ReleaseDC(hWnd_main, hdc);
+  ReleaseDC(hWnd, hdc);
   return;
 }
 
@@ -169,9 +169,9 @@ void drawTilesHDC(HDC hdc) {
 void DrawTiles(void) {
   HDC hdc;
 
-  hdc = GetDC(hWnd_main);
+  hdc = GetDC(hWnd);
   drawTilesHDC(hdc);
-  ReleaseDC(hWnd_main, hdc);
+  ReleaseDC(hWnd, hdc);
   return;
 }
 
@@ -214,9 +214,9 @@ void drawMineCounterHDC(HDC hdc) {
 void drawMineCounter(void) {
   HDC hdc;
 
-  hdc = GetDC(hWnd_main);
+  hdc = GetDC(hWnd);
   drawMineCounterHDC(hdc);
-  ReleaseDC(hWnd_main, hdc);
+  ReleaseDC(hWnd, hdc);
   return;
 }
 
@@ -243,9 +243,9 @@ void drawTimerHDC(HDC hdc) {
 void drawTimer(void) {
   HDC hdc;
 
-  hdc = GetDC(hWnd_main);
+  hdc = GetDC(hWnd);
   drawTimerHDC(hdc);
-  ReleaseDC(hWnd_main, hdc);
+  ReleaseDC(hWnd, hdc);
   return;
 }
 
@@ -262,9 +262,9 @@ void drawFaceHDC(HDC hdc, int face_id) {
 void drawFace(int face_id) {
   HDC hdc;
 
-  hdc = GetDC(hWnd_main);
+  hdc = GetDC(hWnd);
   drawFaceHDC(hdc, face_id);
-  ReleaseDC(hWnd_main, hdc);
+  ReleaseDC(hWnd, hdc);
   return;
 }
 
@@ -345,9 +345,9 @@ void drawGameHDC(HDC hdc) {
 void drawGame(void) {
   HDC hdc;
 
-  hdc = GetDC(hWnd_main);
+  hdc = GetDC(hWnd);
   drawGameHDC(hdc);
-  ReleaseDC(hWnd_main, hdc);
+  ReleaseDC(hWnd, hdc);
   return;
 }
 

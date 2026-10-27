@@ -9,7 +9,7 @@ void showAboutWindow(void) {
   getStrFromResources(RES_SHELL_ABOUT_OTHER_STUFF, other_stuff, 0x80);
   // g_icon_name_00000064 --> 0x64
   hIcon = LoadIconW(hModule, MAKEINTRESOURCEW(0x64));
-  ShellAboutW(hWnd_main, title_bar, other_stuff, hIcon);
+  ShellAboutW(hWnd, title_bar, other_stuff, hIcon);
   return;
 }
 

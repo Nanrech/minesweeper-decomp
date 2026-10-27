@@ -813,7 +813,7 @@ typedef ACCESS_MASK REGSAM;
 typedef LONG LSTATUS;
 
 extern undefined4 g_state_face;
-extern undefined4 hWnd_main;
+extern HWND hWnd;
 extern undefined4 g_rect_offset_right;
 extern undefined4 g_state_color;
 extern int g_state_difficulty;

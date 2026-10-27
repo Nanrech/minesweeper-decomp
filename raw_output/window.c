@@ -44,12 +44,12 @@ void maybeUpdateWindowLayoutIDK(uint param_1) {
   tagRECT local_10;
 
   bVar1 = FALSE;
-  if (hWnd_main != (HWND)0x0) {
+  if (hWnd != (HWND)0x0) {
     g_window_height = g_caption_height;
     if ((((((byte)g_state_menu & 1) == 0) &&
           (g_window_height = g_menu_height + g_caption_height, hGameMenu != (HMENU)0x0)) &&
-         (BVar2 = GetMenuItemRect(hWnd_main, hGameMenu, 0, &local_30), BVar2 != 0)) &&
-        ((BVar2 = GetMenuItemRect(hWnd_main, hGameMenu, 1, &local_20),
+         (BVar2 = GetMenuItemRect(hWnd, hGameMenu, 0, &local_30), BVar2 != 0)) &&
+        ((BVar2 = GetMenuItemRect(hWnd, hGameMenu, 1, &local_20),
           BVar2 != 0 && (local_30.top != local_20.top)))) {
       g_window_height = g_window_height + g_menu_height;
       bVar1 = TRUE;
@@ -70,20 +70,20 @@ void maybeUpdateWindowLayoutIDK(uint param_1) {
     }
     if (g_state_minimized == 0) {
       if ((param_1 & 2) != 0) {
-        MoveWindow(hWnd_main, g_state_xpos, g_state_ypos, g_window_width + g_rect_offset_right,
+        MoveWindow(hWnd, g_state_xpos, g_state_ypos, g_window_width + g_rect_offset_right,
                    g_rect_draw_preset_bottom + g_window_height, 1);
       }
       if (((bVar1) && (hGameMenu != (HMENU)0x0)) &&
-          ((BVar2 = GetMenuItemRect(hWnd_main, hGameMenu, 0, &local_30),
-            BVar2 != 0 && ((BVar2 = GetMenuItemRect(hWnd_main, hGameMenu, 1, &local_20),
+          ((BVar2 = GetMenuItemRect(hWnd, hGameMenu, 0, &local_30),
+            BVar2 != 0 && ((BVar2 = GetMenuItemRect(hWnd, hGameMenu, 1, &local_20),
                             BVar2 != 0 && (local_30.top == local_20.top)))))) {
         g_window_height = g_window_height - g_menu_height;
-        MoveWindow(hWnd_main, g_state_xpos, g_state_ypos, g_window_width + g_rect_offset_right,
+        MoveWindow(hWnd, g_state_xpos, g_state_ypos, g_window_width + g_rect_offset_right,
                    g_rect_draw_preset_bottom + g_window_height, 1);
       }
       if ((param_1 & 4) != 0) {
         SetRect(&local_10, 0, 0, g_rect_offset_right, g_rect_draw_preset_bottom);
-        InvalidateRect(hWnd_main, &local_10, 1);
+        InvalidateRect(hWnd, &local_10, 1);
       }
     }
   }

@@ -255,7 +255,7 @@ void updateMenuCheckmark(ushort menu_item, int checked) {
 void FUN_01003ce5(uint param_1) {
   g_state_menu = param_1;
   updateMenuCheckmarks();
-  SetMenu(hWnd_main, (HMENU)(~-(uint)((g_state_menu & 1U) != 0) & hGameMenu));
+  SetMenu(hWnd, (HMENU)(~-(uint)((g_state_menu & 1U) != 0) & hGameMenu));
   maybeUpdateWindowLayoutIDK(2);
   return;
 }

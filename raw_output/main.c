@@ -30,7 +30,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
           if (uMsg == 2) {
             // Nan:
             // 1 here is the id of a timer so it should be renamed
-            KillTimer(hWnd_main, 1);
+            KillTimer(hWnd, 1);
             PostQuitMessage(0);
           } else {
             // Nan:
@@ -117,7 +117,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
             goto switchD_01001f75_caseD_203;
           }
           if (uVar3 == 0x200) {
-            ShowWindow(hWnd_main, 0);
+            ShowWindow(hWnd, 0);
             goto LAB_01001eac;
           }
           if (uVar3 < 0x209)
@@ -176,7 +176,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
           if (iVar4 == 0) {
             showMessageBoxError(5);
           LAB_01001eac:
-            SendMessageW(hWnd_main, 0x112, 0xf060, 0);
+            SendMessageW(hWnd, 0x112, 0xf060, 0);
             return 0;
           }
           drawGame();
@@ -221,7 +221,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
     if (DAT_01005140 != 0) {
       FUN_010031d4(-3, -3);
       DAT_01005144 = 1;
-      PostMessageW(hWnd_main, 0x200, wParam, lParam);
+      PostMessageW(hWnd, 0x200, wParam, lParam);
       return 0;
     }
     if ((wParam & 1) == 0) {
@@ -343,12 +343,12 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     // DAT_000001f5 --> 0x1f5
     hAccTable = LoadAcceleratorsW(hModule, MAKEINTRESOURCEW(0x1f5));
     loadSettingsFromRegistry();
-    hWnd_main = CreateWindowExW(0, (LPCWSTR)&g_class_name, (LPCWSTR)&g_class_name, 0xca0000,
+    hWnd = CreateWindowExW(0, (LPCWSTR)&g_class_name, (LPCWSTR)&g_class_name, 0xca0000,
                                 g_state_xpos - g_window_width, g_state_ypos - g_window_height,
                                 g_rect_offset_right + g_window_width,
                                 g_rect_draw_preset_bottom + g_window_height, (HWND)0x0,
                                 (HMENU)0x0, hModule, (LPVOID)0x0);
-    if (hWnd_main == (HWND)0x0) {
+    if (hWnd == (HWND)0x0) {
       str_id = 1000;
     } else {
       maybeUpdateWindowLayoutIDK(1);
@@ -356,11 +356,11 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
       if (BVar2 != 0) {
         FUN_01003ce5(g_state_menu);
         prepareNewGame();
-        ShowWindow(hWnd_main, 1);
-        UpdateWindow(hWnd_main);
+        ShowWindow(hWnd, 1);
+        UpdateWindow(hWnd);
         g_state_minimized = 0;
         while (BVar2 = GetMessageW(&local_28, (HWND)0x0, 0, 0), BVar2 != 0) {
-          iVar3 = TranslateAcceleratorW(hWnd_main, hAccTable, &local_28);
+          iVar3 = TranslateAcceleratorW(hWnd, hAccTable, &local_28);
           if (iVar3 == 0) {
             TranslateMessage(&local_28);
             DispatchMessageW(&local_28);

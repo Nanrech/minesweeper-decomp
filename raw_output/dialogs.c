@@ -19,13 +19,13 @@ BOOL handleClickingFace(uint lParam) {
   // BVar2 = PtInRect(&face_area, (POINT)(CONCAT44(local_30.pt.y, lParam) & 0xffffffff0000ffff));
   BVar2 = PtInRect(&face_area, local_30.pt);
   if (BVar2 != 0) {
-    SetCapture(hWnd_main);
+    SetCapture(hWnd);
     drawFace(4);
-    MapWindowPoints(hWnd_main, (HWND)0x0, (LPPOINT)&face_area, 2);
+    MapWindowPoints(hWnd, (HWND)0x0, (LPPOINT)&face_area, 2);
   LAB_0100148c:
     do {
       do {
-        BVar2 = PeekMessageW(&local_30, hWnd_main, 0x200, 0x20d, 1);
+        BVar2 = PeekMessageW(&local_30, hWnd, 0x200, 0x20d, 1);
       } while (BVar2 == 0);
       if (local_30.message == 0x200) {
         pt.y = local_30.pt.y;
@@ -236,7 +236,7 @@ BOOL inputNewHighScoreNameProc(HWND dlg_item, int param_2, ushort param_3) {
 
 void inputCustomGameParams(void) {
   // DAT_00000050_maybe_template_name --> 0x50
-  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x50), hWnd_main, inputCustomGameParamsProc, 0);
+  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x50), hWnd, inputCustomGameParamsProc, 0);
   // Nan:
   // This syntax tells us that the assembly is writing to the lower 16 bits of
   // g_state_difficulty
@@ -255,14 +255,14 @@ void inputCustomGameParams(void) {
 
 void inputNewHighScoreName(void) {
   // DAT_00000258 --> 0x258
-  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x258), hWnd_main, inputNewHighScoreNameProc, 0);
+  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x258), hWnd, inputNewHighScoreNameProc, 0);
   g_state_should_commit_to_register = TRUE;
   return;
 }
 
 void showHighScores(void) {
   // DAT_000002bc --> 0x2bc
-  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x2bc), hWnd_main, showHighScoresProc, 0);
+  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x2bc), hWnd, showHighScoresProc, 0);
   return;
 }
 
