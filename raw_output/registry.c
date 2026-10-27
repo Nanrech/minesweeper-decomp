@@ -77,9 +77,9 @@ void loadSettingsFromRegistry(void) {
   g_state_time1 = readRegIntClampedOrDefault(REG_IDX_TIME1, 999, 0, 999);
   g_state_time2 = readRegIntClampedOrDefault(REG_IDX_TIME2, 999, 0, 999);
   g_state_time3 = readRegIntClampedOrDefault(REG_IDX_TIME3, 999, 0, 999);
-  readRegStringClampedOrDefault(REG_IDX_NAME1, (LPWSTR)&g_state_name1);
-  readRegStringClampedOrDefault(REG_IDX_NAME2, (LPWSTR)&g_state_name2);
-  readRegStringClampedOrDefault(REG_IDX_NAME3, (LPWSTR)&g_state_name3);
+  readRegStringClampedOrDefault(REG_IDX_NAME1, g_state_name1);
+  readRegStringClampedOrDefault(REG_IDX_NAME2, g_state_name2);
+  readRegStringClampedOrDefault(REG_IDX_NAME3, g_state_name3);
   hWnd = GetDesktopWindow();
   hdc = GetDC(hWnd);
   upper_bound = 1;
@@ -135,9 +135,9 @@ void commitSettingsToRegister(void) {
   setRegInt(REG_IDX_TIME1, g_state_time1);
   setRegInt(REG_IDX_TIME2, g_state_time2);
   setRegInt(REG_IDX_TIME3, g_state_time3);
-  setRegStr(REG_IDX_NAME1, (LPCWSTR)&g_state_name1);
-  setRegStr(REG_IDX_NAME2, (LPCWSTR)&g_state_name2);
-  setRegStr(REG_IDX_NAME3, (LPCWSTR)&g_state_name3);
+  setRegStr(REG_IDX_NAME1, g_state_name1);
+  setRegStr(REG_IDX_NAME2, g_state_name2);
+  setRegStr(REG_IDX_NAME3, g_state_name3);
   RegCloseKey(hKey);
   return;
 }
@@ -222,9 +222,9 @@ void initSettingsFirstTime(void) {
   g_state_time1 = getIntFromIniFileClamped(0xb, 999, 0, 999);
   g_state_time2 = getIntFromIniFileClamped(0xd, 999, 0, 999);
   g_state_time3 = getIntFromIniFileClamped(0xf, 999, 0, 999);
-  getStrFromIniFile(0xc, (LPWSTR)&g_state_name1);
-  getStrFromIniFile(0xe, (LPWSTR)&g_state_name2);
-  getStrFromIniFile(0x10, (LPWSTR)&g_state_name3);
+  getStrFromIniFile(0xc, g_state_name1);
+  getStrFromIniFile(0xe, g_state_name2);
+  getStrFromIniFile(0x10, g_state_name3);
   pHVar6 = GetDesktopWindow();
   hdc = GetDC(pHVar6);
   UVar7 = 1;

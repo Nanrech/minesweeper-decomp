@@ -171,14 +171,14 @@ BOOL showHighScoresProc(HWND param_1, int param_2, HWND param_3, int param_4) {
         g_state_time3 = 999;
         g_state_time2 = 999;
         g_state_time1 = 999;
-        lstrcpyW((LPWSTR)&g_state_name1, (LPCWSTR)&g_default_anon_name);
-        lstrcpyW((LPWSTR)&g_state_name2, (LPCWSTR)&g_default_anon_name);
-        lstrcpyW((LPWSTR)&g_state_name3, (LPCWSTR)&g_default_anon_name);
+        lstrcpyW(g_state_name1, (LPCWSTR)&g_default_anon_name);
+        lstrcpyW(g_state_name2, (LPCWSTR)&g_default_anon_name);
+        lstrcpyW(g_state_name3, (LPCWSTR)&g_default_anon_name);
         g_state_should_commit_to_register = TRUE;
       }
-      setHighScoreDlgTimesFormat(param_1, 0x2bd, g_state_time1, (LPCWSTR)&g_state_name1);
-      setHighScoreDlgTimesFormat(param_1, 0x2bf, g_state_time2, (LPCWSTR)&g_state_name2);
-      setHighScoreDlgTimesFormat(param_1, 0x2c1, g_state_time3, (LPCWSTR)&g_state_name3);
+      setHighScoreDlgTimesFormat(param_1, 0x2bd, g_state_time1, g_state_name1);
+      setHighScoreDlgTimesFormat(param_1, 0x2bf, g_state_time2, g_state_name2);
+      setHighScoreDlgTimesFormat(param_1, 0x2c1, g_state_time3, g_state_name3);
       return 1;
     }
     uCommand = 10;
@@ -207,11 +207,11 @@ BOOL inputNewHighScoreNameProc(HWND dlg_item, int param_2, ushort param_3) {
     hWnd = GetDlgItem(dlg_item, 0x25a);
     SendMessageW(hWnd, Msg, wParam, lParam);
     if ((short)g_state_difficulty == 0) {
-      lpString_00 = (LPCWSTR)&g_state_name1;
+      lpString_00 = g_state_name1;
     } else {
-      lpString_00 = (LPCWSTR)&g_state_name2;
+      lpString_00 = g_state_name2;
       if ((short)g_state_difficulty != 1) {
-        lpString_00 = (LPCWSTR)&g_state_name3;
+        lpString_00 = g_state_name3;
       }
     }
     SetDlgItemTextW(dlg_item, 0x25a, lpString_00);
@@ -221,11 +221,11 @@ BOOL inputNewHighScoreNameProc(HWND dlg_item, int param_2, ushort param_3) {
       return 0;
     }
     if (sVar1 == 0) {
-      lpString = (LPWSTR)&g_state_name1;
+      lpString = g_state_name1;
     } else {
-      lpString = (LPWSTR)&g_state_name2;
+      lpString = g_state_name2;
       if (sVar1 != 1) {
-        lpString = (LPWSTR)&g_state_name3;
+        lpString = g_state_name3;
       }
     }
     GetDlgItemTextW(dlg_item, 0x25a, lpString, 0x20);
