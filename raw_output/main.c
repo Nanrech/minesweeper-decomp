@@ -170,7 +170,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
             FUN_01003d76(sVar9, uVar10);
             goto switchD_01001f75_caseD_203;
           }
-          g_state_color = (uint)(g_state_color == 0);
+          g_state_color = g_state_color == 0;
           destroyGDIObjects();
           iVar4 = FUN_01002414_scary();
           if (iVar4 == 0) {

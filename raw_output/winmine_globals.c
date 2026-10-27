@@ -3,7 +3,7 @@
 undefined4 g_state_face;
 HWND hWnd;
 undefined4 g_rect_offset_right;
-undefined4 g_state_color;
+int g_state_color;
 int g_state_difficulty;
 int g_state_marks;
 int g_state_sound;

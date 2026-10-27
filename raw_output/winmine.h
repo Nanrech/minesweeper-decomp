@@ -815,7 +815,7 @@ typedef LONG LSTATUS;
 extern undefined4 g_state_face;
 extern HWND hWnd;
 extern undefined4 g_rect_offset_right;
-extern undefined4 g_state_color;
+extern int g_state_color;
 extern int g_state_difficulty;
 extern int g_state_marks;
 extern int g_state_sound;

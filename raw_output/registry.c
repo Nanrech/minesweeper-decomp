@@ -87,7 +87,7 @@ void loadSettingsFromRegistry(void) {
   // Nan:
   // iVar2 = num_colors
   iVar2 = GetDeviceCaps(hdc, NUMCOLORS);
-  g_state_color = readRegIntClampedOrDefault(10, (uint)(iVar2 != 2), lower_bound, upper_bound);
+  g_state_color = readRegIntClampedOrDefault(10, iVar2 != 2, lower_bound, upper_bound);
   hWnd = GetDesktopWindow();
   ReleaseDC(hWnd, hdc);
   if (g_state_sound == 3) {
@@ -230,7 +230,7 @@ void initSettingsFirstTime(void) {
   UVar7 = 1;
   UVar5 = 0;
   iVar3 = GetDeviceCaps(hdc, 0x18);
-  g_state_color = getIntFromIniFileClamped(10, (uint)(iVar3 != 2), UVar5, UVar7);
+  g_state_color = getIntFromIniFileClamped(10, iVar3 != 2, UVar5, UVar7);
   pHVar6 = GetDesktopWindow();
   ReleaseDC(pHVar6, hdc);
   if (g_state_sound == 3) {
