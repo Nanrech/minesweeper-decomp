@@ -321,8 +321,8 @@ void drawGameFrame(HDC hdc) {
   int iVar2;
 
   iVar1 = g_rect_offset_right;
-  iVar2 = g_rect_draw_preset_bottom_01005b20;
-  drawRectangle(hdc, 0, 0, g_rect_offset_right + -1, g_rect_draw_preset_bottom_01005b20 + -1, 3, 1);
+  iVar2 = g_rect_draw_preset_bottom;
+  drawRectangle(hdc, 0, 0, g_rect_offset_right + -1, g_rect_draw_preset_bottom + -1, 3, 1);
   drawRectangle(hdc, 9, 0x34, iVar1 + -10, iVar2 + -10, 3, 0);
   drawRectangle(hdc, 9, 9, iVar1 + -10, 0x2d, 2, 0);
   drawRectangle(hdc, 0x10, 0xf, 0x38, 0x27, 1, 0);

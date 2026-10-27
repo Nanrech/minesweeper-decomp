@@ -174,7 +174,7 @@ BOOL showHighScoresProc(HWND param_1, int param_2, HWND param_3, int param_4) {
         lstrcpyW((LPWSTR)&g_state_name1, (LPCWSTR)&g_default_anon_name);
         lstrcpyW((LPWSTR)&g_state_name2, (LPCWSTR)&g_default_anon_name);
         lstrcpyW((LPWSTR)&g_state_name3, (LPCWSTR)&g_default_anon_name);
-        g_state_should_commit_to_register = 1;
+        g_state_should_commit_to_register = TRUE;
       }
       setHighScoreDlgTimesFormat(param_1, 0x2bd, g_state_time1, (LPCWSTR)&g_state_name1);
       setHighScoreDlgTimesFormat(param_1, 0x2bf, g_state_time2, (LPCWSTR)&g_state_name2);
@@ -248,7 +248,7 @@ void inputCustomGameParams(void) {
   // g_state_difficulty = DIFFICULTY_CUSTOM; */
   g_state_difficulty = DIFFICULTY_CUSTOM;
   updateMenuCheckmarks();
-  g_state_should_commit_to_register = 1;
+  g_state_should_commit_to_register = TRUE;
   prepareNewGame();
   return;
 }
@@ -256,7 +256,7 @@ void inputCustomGameParams(void) {
 void inputNewHighScoreName(void) {
   // DAT_00000258 --> 0x258
   DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x258), hWnd_main, inputNewHighScoreNameProc, 0);
-  g_state_should_commit_to_register = 1;
+  g_state_should_commit_to_register = TRUE;
   return;
 }
 

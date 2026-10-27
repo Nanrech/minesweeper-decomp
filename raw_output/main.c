@@ -181,7 +181,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
           }
           drawGame();
         }
-        g_state_should_commit_to_register = 1;
+        g_state_should_commit_to_register = TRUE;
         uVar3 = g_state_menu;
       }
       FUN_01003ce5(uVar3);
@@ -346,7 +346,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     hWnd_main = CreateWindowExW(0, (LPCWSTR)&g_class_name, (LPCWSTR)&g_class_name, 0xca0000,
                                 g_state_xpos - g_window_width, g_state_ypos - g_window_height,
                                 g_rect_offset_right + g_window_width,
-                                g_rect_draw_preset_bottom_01005b20 + g_window_height, (HWND)0x0,
+                                g_rect_draw_preset_bottom + g_window_height, (HWND)0x0,
                                 (HMENU)0x0, hModule, (LPVOID)0x0);
     if (hWnd_main == (HWND)0x0) {
       str_id = 1000;
@@ -367,7 +367,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
           }
         }
         cleanupGameResources();
-        if (g_state_should_commit_to_register == 0) {
+        if (g_state_should_commit_to_register == FALSE) {
           return local_28.wParam;
         }
         commitSettingsToRegister();

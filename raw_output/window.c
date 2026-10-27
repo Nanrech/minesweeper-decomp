@@ -55,7 +55,7 @@ void maybeUpdateWindowLayoutIDK(uint param_1) {
       bVar1 = TRUE;
     }
     g_rect_offset_right = g_state_board_width * 0x10 + 0x18;
-    g_rect_draw_preset_bottom_01005b20 = g_state_board_height * 0x10 + 0x43;
+    g_rect_draw_preset_bottom = g_state_board_height * 0x10 + 0x43;
     iVar3 = getScreenDimensions(0);
     iVar3 = (g_rect_offset_right + g_state_xpos) - iVar3;
     if (0 < iVar3) {
@@ -63,7 +63,7 @@ void maybeUpdateWindowLayoutIDK(uint param_1) {
       g_state_xpos = g_state_xpos - iVar3;
     }
     iVar3 = getScreenDimensions(1);
-    iVar3 = (g_rect_draw_preset_bottom_01005b20 + g_state_ypos) - iVar3;
+    iVar3 = (g_rect_draw_preset_bottom + g_state_ypos) - iVar3;
     if (0 < iVar3) {
       param_1 = param_1 | 2;
       g_state_ypos = g_state_ypos - iVar3;
@@ -71,7 +71,7 @@ void maybeUpdateWindowLayoutIDK(uint param_1) {
     if (g_state_minimized == 0) {
       if ((param_1 & 2) != 0) {
         MoveWindow(hWnd_main, g_state_xpos, g_state_ypos, g_window_width + g_rect_offset_right,
-                   g_rect_draw_preset_bottom_01005b20 + g_window_height, 1);
+                   g_rect_draw_preset_bottom + g_window_height, 1);
       }
       if (((bVar1) && (hGameMenu != (HMENU)0x0)) &&
           ((BVar2 = GetMenuItemRect(hWnd_main, hGameMenu, 0, &local_30),
@@ -79,10 +79,10 @@ void maybeUpdateWindowLayoutIDK(uint param_1) {
                             BVar2 != 0 && (local_30.top == local_20.top)))))) {
         g_window_height = g_window_height - g_menu_height;
         MoveWindow(hWnd_main, g_state_xpos, g_state_ypos, g_window_width + g_rect_offset_right,
-                   g_rect_draw_preset_bottom_01005b20 + g_window_height, 1);
+                   g_rect_draw_preset_bottom + g_window_height, 1);
       }
       if ((param_1 & 4) != 0) {
-        SetRect(&local_10, 0, 0, g_rect_offset_right, g_rect_draw_preset_bottom_01005b20);
+        SetRect(&local_10, 0, 0, g_rect_offset_right, g_rect_draw_preset_bottom);
         InvalidateRect(hWnd_main, &local_10, 1);
       }
     }
