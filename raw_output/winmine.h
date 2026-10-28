@@ -59,6 +59,8 @@
 #define SM_CXVIRTUALSCREEN 0x4e
 #define SM_CYVIRTUALSCREEN 0x4f
 
+// ---
+
 #define TILE_HAS_MINE 0x80
 #define TILE_IS_REVEALED 0x40
 #define TILE_STATE_MASK 0x1f
@@ -73,6 +75,10 @@
 #define TILE_STATE_FLAGGED 0x0e
 #define TILE_STATE_COVERED 0x0f
 #define TILE_STATE_BORDER 0x10
+
+#define SOUND_TICK 1
+#define SOUND_WIN  2
+#define SOUND_LOSE 3
 
 typedef unsigned char undefined;
 
@@ -517,6 +523,7 @@ typedef struct tagRECT *LPRECT;
 typedef void *HGDIOBJ;
 
 typedef struct HKEY__ *HKEY;
+#define HKEY_CURRENT_USER ((HKEY)(ULONG_PTR)((LONG)0x80000001))
 
 typedef struct HRSRC__ HRSRC__, *PHRSRC__;
 

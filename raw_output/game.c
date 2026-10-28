@@ -418,6 +418,8 @@ void handleGameOver(int game_result) {
   if ((game_result != 0) && (g_mines_left != 0)) {
     updateAndRedrawMineCounter(-g_mines_left);
   }
+  // Nan:
+  // should probably get unrolled into an if-statement
   playSound(3 - (uint)(game_result != 0));
   g_state_game_flags = 0x10;
   if ((game_result != 0) && ((ushort)g_state_difficulty != 3)) {

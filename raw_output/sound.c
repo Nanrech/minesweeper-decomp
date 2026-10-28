@@ -25,14 +25,14 @@ void playSound(int sound_to_play) {
   LPCWSTR pszSound;
 
   if (g_state_sound == 3) {
-    if (sound_to_play == 1) {
+    if (sound_to_play == SOUND_TICK) {
       // DAT_000001b0 --> 0x1b0
       pszSound = MAKEINTRESOURCEW(0x1b0);
-    } else if (sound_to_play == 2) {
+    } else if (sound_to_play == SOUND_WIN) {
       // DAT_000001b1 --> 0x1b1
       pszSound = MAKEINTRESOURCEW(0x1b1);
     } else {
-      if (sound_to_play != 3) {
+      if (sound_to_play != SOUND_LOSE) {
         return;
       }
       // DAT_000001b2 --> 0x1b2
