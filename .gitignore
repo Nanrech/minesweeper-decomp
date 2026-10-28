@@ -1,0 +1,5 @@
+resources/*.rc
+resources/*.bmp
+resources/*.ico
+resources/*.manifest
+resources/*.wav

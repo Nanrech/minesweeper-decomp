@@ -5,10 +5,10 @@ void showAboutWindow(void) {
   WCHAR title_bar[128];
   WCHAR other_stuff[128];
 
-  getStrFromResources(RES_SHELL_ABOUT_APP, title_bar, 0x80);
-  getStrFromResources(RES_SHELL_ABOUT_OTHER_STUFF, other_stuff, 0x80);
+  getStrFromResources(RES_STR_ABOUT_APP, title_bar, 0x80);
+  getStrFromResources(RES_STR_ABOUT_OTHER_STUFF, other_stuff, 0x80);
   // g_icon_name_00000064 --> 0x64
-  hIcon = LoadIconW(hModule, MAKEINTRESOURCEW(0x64));
+  hIcon = LoadIconW(hModule, MAKEINTRESOURCEW(RES_ICONGROUP));
   ShellAboutW(hWnd, title_bar, other_stuff, hIcon);
   return;
 }

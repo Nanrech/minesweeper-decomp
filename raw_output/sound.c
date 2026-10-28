@@ -27,16 +27,16 @@ void playSound(int sound_to_play) {
   if (g_state_sound == 3) {
     if (sound_to_play == SOUND_TICK) {
       // DAT_000001b0 --> 0x1b0
-      pszSound = MAKEINTRESOURCEW(0x1b0);
+      pszSound = MAKEINTRESOURCEW(RES_SOUND_LOSE);
     } else if (sound_to_play == SOUND_WIN) {
       // DAT_000001b1 --> 0x1b1
-      pszSound = MAKEINTRESOURCEW(0x1b1);
+      pszSound = MAKEINTRESOURCEW(RES_SOUND_WIN);
     } else {
       if (sound_to_play != SOUND_LOSE) {
         return;
       }
       // DAT_000001b2 --> 0x1b2
-      pszSound = MAKEINTRESOURCEW(0x1b2);
+      pszSound = MAKEINTRESOURCEW(RES_SOUND_LOSE);
     }
     PlaySoundW(pszSound, hModule, SND_RESOURCE_OR_SND_ASYNC);
   }

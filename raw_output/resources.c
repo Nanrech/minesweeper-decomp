@@ -7,10 +7,10 @@ void showMessageBoxError(ushort str_id) {
   if (str_id < 999) {
     LoadStringW(hModule, (uint)str_id, msgbox_text, 0x80);
   } else {
-    LoadStringW(hModule, 6, msgbox_caption, 0x80);
+    LoadStringW(hModule, RES_STR_ERROR_CODE, msgbox_caption, 0x80);
     wsprintfW(msgbox_text, msgbox_caption, (uint)str_id);
   }
-  LoadStringW(hModule, 3, msgbox_caption, 0x80);
+  LoadStringW(hModule, RES_STR_ERROR_TITLE, msgbox_caption, 0x80);
   MessageBoxW((HWND)0x0, msgbox_text, msgbox_caption, MB_ICONERROR);
   return;
 }

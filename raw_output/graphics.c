@@ -1,6 +1,8 @@
 #include "winmine.h"
 
 HRSRC findBitmapResourceMAYBE(int resource_id) {
+  // Nan:
+  // Weird arithmetic. Replace with a switch statement or something
   HRSRC pHVar1;
 
   pHVar1 =

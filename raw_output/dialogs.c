@@ -236,7 +236,7 @@ BOOL inputNewHighScoreNameProc(HWND dlg_item, int param_2, ushort param_3) {
 
 void inputCustomGameParams(void) {
   // DAT_00000050_maybe_template_name --> 0x50
-  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x50), hWnd, inputCustomGameParamsProc, 0);
+  DialogBoxParamW(hModule, MAKEINTRESOURCEW(RES_DLG_CUSTOM), hWnd, inputCustomGameParamsProc, 0);
   // Nan:
   // This syntax tells us that the assembly is writing to the lower 16 bits of
   // g_state_difficulty
@@ -255,14 +255,14 @@ void inputCustomGameParams(void) {
 
 void inputNewHighScoreName(void) {
   // DAT_00000258 --> 0x258
-  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x258), hWnd, inputNewHighScoreNameProc, 0);
+  DialogBoxParamW(hModule, MAKEINTRESOURCEW(RES_DLG_NEWHS), hWnd, inputNewHighScoreNameProc, 0);
   g_state_should_commit_to_register = TRUE;
   return;
 }
 
 void showHighScores(void) {
   // DAT_000002bc --> 0x2bc
-  DialogBoxParamW(hModule, MAKEINTRESOURCEW(0x2bc), hWnd, showHighScoresProc, 0);
+  DialogBoxParamW(hModule, MAKEINTRESOURCEW(RES_DLG_SHOWHS), hWnd, showHighScoresProc, 0);
   return;
 }
 

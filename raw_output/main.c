@@ -174,7 +174,7 @@ LRESULT Wndproc(HWND hWnd, uint uMsg, uint wParam, uint lParam) {
           destroyGDIObjects();
           iVar4 = FUN_01002414_scary();
           if (iVar4 == 0) {
-            showMessageBoxError(5);
+            showMessageBoxError(ERR_NO_MEMORY);
           LAB_01001eac:
             SendMessageW(hWnd, 0x112, 0xf060, 0);
             return 0;
@@ -324,7 +324,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
   local_c.dwICC = 0x16fd;
   InitCommonControlsEx(&local_c);
   // g_icon_name_00000064 --> 0x64
-  hIcon = LoadIconW(hModule, MAKEINTRESOURCEW(0x64));
+  hIcon = LoadIconW(hModule, MAKEINTRESOURCEW(RES_ICONGROUP));
   wc.style = 0;
   wc.lpfnWndProc = Wndproc;
   wc.cbClsExtra = 0;
@@ -332,16 +332,18 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
   wc.hInstance = hModule;
   wc.hIcon = hIcon;
   // DAT_00007f00 --> 0x7f00
-  wc.hCursor = LoadCursorW((HINSTANCE)0x0, MAKEINTRESOURCEW(0x7f00));
+  // Nan:
+  // This is a default resource
+  wc.hCursor = LoadCursorW((HINSTANCE)0x0, MAKEINTRESOURCEW(IDC_ARROW));
   wc.hbrBackground = (HBRUSH)GetStockObject(1);
   wc.lpszMenuName = (LPCWSTR)0x0;
   wc.lpszClassName = (LPCWSTR)&g_class_name;
   AVar1 = RegisterClassW(&wc);
   if (AVar1 != 0) {
     // DAT_000001f4 --> 0x1f4
-    hGameMenu = LoadMenuW(hModule, MAKEINTRESOURCEW(0x1f4));
+    hGameMenu = LoadMenuW(hModule, MAKEINTRESOURCEW(RES_MENU));
     // DAT_000001f5 --> 0x1f5
-    hAccTable = LoadAcceleratorsW(hModule, MAKEINTRESOURCEW(0x1f5));
+    hAccTable = LoadAcceleratorsW(hModule, MAKEINTRESOURCEW(RES_ACCELERATORS));
     loadSettingsFromRegistry();
     hWnd = CreateWindowExW(0, (LPCWSTR)&g_class_name, (LPCWSTR)&g_class_name, 0xca0000,
                                 g_state_xpos - g_window_width, g_state_ypos - g_window_height,

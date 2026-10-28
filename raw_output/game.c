@@ -614,7 +614,7 @@ void FUN_010037e1(void) {
       g_state_game_active = 1;
       UVar1 = SetTimer(hWnd, 1, 1000, (TIMERPROC)0x0);
       if (UVar1 == 0) {
-        showMessageBoxError(4);
+        showMessageBoxError(ERR_TIMER_ALLOC);
       }
     }
     if ((g_state_game_flags & 1) == 0) {

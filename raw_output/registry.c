@@ -187,9 +187,9 @@ void initSettingsFirstTime(void) {
 
   DVar2 = GetTickCount();
   srand(DVar2 & 0xffff);
-  getStrFromResources(1, (LPWSTR)&g_class_name, 0x20);
-  getStrFromResources(7, (LPWSTR)&fmt_seconds_string, 0x20);
-  getStrFromResources(8, (LPWSTR)&g_default_anon_name, 0x20);
+  getStrFromResources(RES_STR_CLASSNAME, (LPWSTR)&g_class_name, 0x20);
+  getStrFromResources(RES_STR_SECONDS_FMT, (LPWSTR)&fmt_seconds_string, 0x20);
+  getStrFromResources(RES_STR_ANONYMOUS, (LPWSTR)&g_default_anon_name, 0x20);
   iVar3 = GetSystemMetrics(SM_CYCAPTION);
   g_caption_height = iVar3 + 1;
   iVar3 = GetSystemMetrics(SM_CYMENU);

@@ -47,8 +47,6 @@
 #define WM_COMMAND 0x111
 #define DIFFICULTY_CUSTOM 0x3
 #define MB_ICONERROR 0x10
-#define RES_SHELL_ABOUT_APP 0xc
-#define RES_SHELL_ABOUT_OTHER_STUFF 0xd
 #define R2_COPYPEN 0xd
 #define R2_WHITE 0x10
 #define SRCCOPY 0xcc0020
@@ -58,6 +56,7 @@
 #define SM_CYMENU 0xf
 #define SM_CXVIRTUALSCREEN 0x4e
 #define SM_CYVIRTUALSCREEN 0x4f
+#define IDC_ARROW 32512
 
 // ---
 
@@ -79,6 +78,31 @@
 #define SOUND_TICK 1
 #define SOUND_WIN  2
 #define SOUND_LOSE 3
+
+#define RES_SOUND_TICK 0x1b0
+#define RES_SOUND_WIN  0x1b1
+#define RES_SOUND_LOSE 0x1b2
+
+#define RES_MENU 0x1f4
+
+#define RES_DLG_CUSTOM 0x50
+#define RES_DLG_NEWHS  0x258
+#define RES_DLG_SHOWHS 0x2bc
+
+#define RES_ACCELERATORS 0x1f5
+
+#define RES_ICONGROUP 0x64
+
+#define ERR_TIMER_ALLOC 4
+#define ERR_NO_MEMORY 5
+
+#define RES_STR_CLASSNAME 1
+#define RES_STR_ERROR_TITLE 3
+#define RES_STR_ERROR_CODE 6
+#define RES_STR_SECONDS_FMT 7
+#define RES_STR_ANONYMOUS 8
+#define RES_STR_ABOUT_APP 12
+#define RES_STR_ABOUT_OTHER_STUFF 13
 
 typedef unsigned char undefined;
 

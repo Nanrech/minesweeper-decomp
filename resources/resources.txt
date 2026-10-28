@@ -1,0 +1,45 @@
+WAVE
+- 432: Tick
+- 433: Win
+- 434: Lose
+
+Bitmap
+- 410: Tileset (color)
+- 411: Tileset (b&w)
+- 420: Clock (red)
+- 421: Clock (b&w)
+- 430: Faces (color)
+- 431: Faces (b&w)
+
+Icon
+- 1: App icon (b&w) (16 colors)
+- 2: App icon (b&w) (2 colors)
+- 3: App icon (color) (48x48) (256 colors)
+- 4: App icon (color) (32x32) (256 colors)
+- 5: App icon (color) (16x16) (256 colors)
+- 6: App icon (color) (48x48) (16.8mil colors)
+- 7: App icon (color) (32x32) (16.8mil colors)
+- 8: App icon (color) (16x16) (16.8mil colors)
+
+Menu
+- 500: Game menu (Game/Help bar)
+
+Dialog
+- 80: Custom gamemode settings
+- 600: Unknown
+- 700: High scores
+
+String Table
+- 1: String Table
+
+Accelerators
+- 501: Accelerator table
+
+Icon Group
+- 100: Icon Group
+
+Version Info
+- 1: Version Info
+
+Manifest
+- 1: Manifest
