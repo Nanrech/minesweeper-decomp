@@ -57,7 +57,7 @@ void loadSettingsFromRegistry(void) {
   int upper_bound;
   DWORD lpdwDisposition;
 
-  RegCreateKeyExW((HKEY)&HKEY_CURRENT_USER, L"Software\\Microsoft\\winmine", 0, (LPWSTR)NULL,
+  RegCreateKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\winmine", 0, (LPWSTR)NULL,
                   REG_OPTION_NON_VOLATILE, KEY_READ, (LPSECURITY_ATTRIBUTES)NULL, &hKey,
                   &lpdwDisposition);
   g_state_board_height = readRegIntClampedOrDefault(REG_IDX_HEIGHT, 9, 9, 0x19);
@@ -119,7 +119,7 @@ void setRegStr(int param_1, LPCWSTR param_2) {
 void commitSettingsToRegister(void) {
   DWORD lpdwDisposition;
 
-  RegCreateKeyExW((HKEY)&HKEY_CURRENT_USER, L"Software\\Microsoft\\winmine", 0, (LPWSTR)NULL,
+  RegCreateKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\winmine", 0, (LPWSTR)NULL,
                   REG_OPTION_NON_VOLATILE, KEY_WRITE, (LPSECURITY_ATTRIBUTES)NULL, &hKey,
                   &lpdwDisposition);
   setRegInt(REG_IDX_DIFFICULTY, (uint)(ushort)g_state_difficulty);
@@ -198,7 +198,7 @@ void initSettingsFirstTime(void) {
   g_border_height = iVar3 + 1;
   iVar3 = GetSystemMetrics(SM_CXBORDER);
   g_window_width = iVar3 + 1;
-  LVar4 = RegCreateKeyExW((HKEY)&HKEY_CURRENT_USER, L"Software\\Microsoft\\winmine", 0, (LPWSTR)0x0,
+  LVar4 = RegCreateKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\winmine", 0, (LPWSTR)0x0,
                           0, 0x20019, (LPSECURITY_ATTRIBUTES)0x0, &hKey, &DStack_4);
   if (LVar4 == 0) {
     iVar3 = readRegIntClampedOrDefault(0x11, 0, 0, 1);
